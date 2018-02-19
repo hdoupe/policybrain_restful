@@ -1,0 +1,11 @@
+name: taxbrain-drf
+dependencies:
+- python >=3.6
+- taxcalc
+- pip:
+    - django ==1.11
+    - djangorestframework
+    - markdown
+    - django-filter
+    - psycopg2
+    - flask
