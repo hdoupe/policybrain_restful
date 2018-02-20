@@ -1,3 +1,6 @@
+import requests
+import os
+
 from django.shortcuts import render
 from django.http import Http404
 from rest_framework.views import APIView
@@ -8,6 +11,7 @@ from rest_framework import status
 from taxbrainrest.models import ModelMeta, ModelInput, ModelResult
 from taxbrainrest.serializers import ModelInputSerializer, ModelResultSerializer
 
+worker_hostname = os.environ.get("WORKER_HOSTNAME")
 
 class TaxBrainStaticModelInputList(APIView):
 
@@ -20,6 +24,10 @@ class TaxBrainStaticModelInputList(APIView):
         serializer = ModelInputSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            response = requests.post(f"http://{worker_hostname}/start_task", data=serializer.data)
+            print(f"http://{worker_hostname}/start_task")
+            print("response status: ", response.status_code)
+            print("response data: ", response.text)
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

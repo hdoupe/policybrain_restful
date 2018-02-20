@@ -9,3 +9,4 @@ dependencies:
     - django-filter
     - psycopg2
     - flask
+    - requests
