@@ -1,4 +1,6 @@
 name: taxbrain-drf
+channels:
+- ospc
 dependencies:
 - python >=3.6
 - taxcalc
